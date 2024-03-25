@@ -1,0 +1,74 @@
+html{
+    box-sizing: border-box;
+    font-family: 'Josefin Sans';
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    color: white;
+    font-size: 2.5em;
+}
+
+.wrapper{
+    border: 2px solid white;
+    border-radius: 25px;
+    margin-top: 5%;
+    padding: 25px;
+    height: 500px;
+    width: 350px;
+}
+
+.screen{
+    display: flex;
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 10px;
+    margin-bottom: 15px;
+    justify-content: end;
+    padding-right: 20px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.button-rows{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.calc-buttons{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 2px solid gray;
+    border-radius: 50px;
+    width: 75px;
+    height: 75px;
+    padding: 25px;
+    background-color:gray;
+    font-size: 24px;
+}
+
+.calc-buttons:last-child{
+    background-color: orange;
+}
+
+.zero:first-child{
+    width: 48%;
+}
+
+.calc-buttons:active{
+    background-color: lightgray;
+    border-color: lightgray;
+}
+
