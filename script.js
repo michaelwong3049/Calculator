@@ -1,5 +1,5 @@
 let displayNumber = '0';
-let calcNumber = 0;
+let calcNumber=  0;
 let previousOperator;
 let previousButton;
 
@@ -8,88 +8,85 @@ const screen = document.querySelector('.screen');
 function buttonClick(value){
     if(isNaN(value)){
         inputSymbol(value);
-    }else{
+    }
+    else{
         inputNumber(value);
     }
     screen.innerText = displayNumber;
 }
 
 function inputSymbol(symbol){
-        if(symbol === 'AC'){
-            displayNumber = '0';
+    if(symbol === 'AC'){
+        displayNumber = '0';
+        calcNumber = 0;
+        previousOperator = null;
+    }
+    else if(symbol === '+/-'){
+        if(displayNumber.indexOf('-') == -1){
+            displayNumber = '-' + displayNumber;
+        }else if(displayNumber.indexOf('-') !== -1){
+            displayNumber = displayNumber.substring(1);
         }
-        else if(symbol === '+/-'){
-            if(displayNumber.indexOf('-') !== -1){
-                displayNumber.slice(1);
-            }
-            else{
-                displayNumber += '-' + displayNumber;
-            }
+    }
+    else if(symbol === '.'){
+        if(displayNumber.indexOf('.') !== -1){
+            displayNumber += '.';
         }
-        else if(symbol === '='){
-            if(previousOperator === null){
-                return;
-            }
-            else{
-                solve(parseInt(displayNumber))
-                previousOperator = null;
-                displayNumber = calcNumber;
-                calcNumber = 0;
-            }
+    }
+    else if(symbol ===  '%'){
+        displayNumber = (parseFloat(displayNumber) * 0.01).toString();
+    }
+    else if(symbol === '='){
+        solve(previousOperator);
+        previousOperator = null;
+        calcNumber = 0;
+    }
+    else if(symbol === 'x' || symbol === '/' || symbol === '-' || symbol === '+'){
+        if(previousOperator !== null){
+            solve(symbol);
         }
-        else if(symbol === 'x' || symbol === '/' || symbol === '-' || symbol === '+'){
-            calculate(symbol);
-            return;
-        }
+        previousOperator = symbol;
+        previousButton = symbol;
+    }
 }
 
 function inputNumber(number){
     if(displayNumber === '0'){
         displayNumber = number;
-    }
-    else{
+    }else if((displayNumber !== '0') && (previousButton === previousOperator)){
+        calcNumber = parseFloat(displayNumber);
+        displayNumber = number;
+        previousButton = number;
+    }else if((displayNumber !== '0') && (previousButton !== previousOperator)){
         displayNumber += number;
+        previousButton = number;
     }
 }
 
-function calculate(symbol){
-    if(displayNumber === '0'){
-        return;
-    }
-
-    const intDisplayNumber = parseInt(displayNumber);
-
-    if(calcNumber === 0){
-        calcNumber = intDisplayNumber;
-    }
-    else{
-        solve(intDisplayNumber);
-    }
-    previousButton = symbol;
-    displayNumber = '0';
-}
-
-function solve(intDisplayNumber){
+function solve(symbol){
     if(previousOperator === 'x'){
-        intDisplayNumber *= calcNumber;
+        calcNumber *= parseFloat(displayNumber);
     }
     else if(previousOperator === '/'){
-        intDisplayNumber /= calcNumber;
-    }
-    else if(previousOperator === '+'){
-        intDisplayNumber += calcNumber;
+        calcNumber /= parseFloat(displayNumber);
     }
     else if(previousOperator === '-'){
-        intDisplayNumber -= calcNumber;
+        calcNumber -= parseFloat(displayNumber);
     }
+    else if(previousOperator === '+'){
+        calcNumber += parseFloat(displayNumber);
+    }
+    displayNumber = calcNumber.toString(); 
 }
 
-function init(){
-    document.querySelector('.calc-buttons').addEventListener('click', function(event){
-        buttonClick(event.target.innerText);
-    })
+function buttonPressed() {
+    const buttons = document.querySelectorAll('.calc-buttons');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            buttonClick(event.target.innerText);
+        });
+    });
+    console.log('hello');
 }
 
-init();
-
-
+buttonPressed();
