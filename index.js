@@ -29,7 +29,7 @@ function inputSymbol(symbol){
         }
     }
     else if(symbol === '.'){
-        if(displayNumber.indexOf('.') !== -1){
+        if(displayNumber.indexOf('.') == -1){
             displayNumber += '.';
         }
     }
